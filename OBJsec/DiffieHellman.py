@@ -1,6 +1,6 @@
 import random, binascii
 """This script is intended to test the Diffie-Hellman Key
-exchange. This computer is key exchanging with itself"""
+exchange. This computer is key exchanging with itself. The data is stored in plaintext and not encrypted yet"""
 
 #Part 1, create random Y and P
 ourY = random.randint(2, 99999) #public values
