@@ -3,10 +3,10 @@ import random, binascii
 exchange. This computer is key exchanging with itself. The data is stored in plaintext and not encrypted yet"""
 
 #Part 1, create random Y and P
-ourY = random.randint(2, 99999) #public values
-ourP = random.randint(2, 99999) #public values
-myX = random.randint(2, 999) #private values
-hisX = random.randint(2, 999) #private values
+ourY = random.randint(2, 99999) #public values, base
+ourP = random.randint(2, 99999) #public values, modulo
+myX = random.randint(2, 999) #private value, client
+hisX = random.randint(2, 999) #private values, server
 
 #Make sure Y is < P, in order for diffie-hellman to work
 while ourY > ourP :
