@@ -2,38 +2,61 @@ import random, binascii
 """This script is intended to test the Diffie-Hellman Key
 exchange. This computer is key exchanging with itself. The data is stored in plaintext and not encrypted yet"""
 
-#Part 1, create random Y and P
-ourY = random.randint(2, 99999) #public values, base
-ourP = random.randint(2, 99999) #public values, modulo
-myX = random.randint(2, 999) #private value, client
-hisX = random.randint(2, 999) #private values, server
+#base, modulo, clientX, serverX = 0
 
-#Make sure Y is < P, in order for diffie-hellman to work
-while ourY > ourP :
-    ourY = random.randint(2, 99999)
+# def init_dh():
+#     #Part 1, create random Y and P
+#     base = random.randint(2, 99999) #public values, base
+#     modulo = random.randint(2, 99999) #public values, modulo
+#     clientX = random.randint(2, 999) #private value, client
+#     serverX = random.randint(2, 999) #private values, server
 
-print("Shared Y: " + str(ourY))
-print("Shared P: " + str(ourP))
-print("My X: " + str(myX) + " (Private)")
-print("His X: " + str(hisX) + " (Private)")
+#     #Make sure Y is < P, in order for diffie-hellman to work
+#     while base > modulo :
+#         base = random.randint(2, 99999)
 
-#Part 2: solving the equation
-print("\nY to the X mod P || (Y ** X) % P")
+def clientValues():
+    val = random.randint(2, 999) #private value, client
+    return val
 
-myAns = (ourY ** myX) % ourP
-print("My answer: " + str(myAns))
+def serverValues():
+    val = random.randint(2, 999) #private values, server
+    return val
 
-hisAns = (ourY ** hisX) % ourP
-print("His answer: " + str(hisAns))
+def sharedValues(base, modulo):
+    base = random.randint(2, 99999) #public values, base
+    modulo = random.randint(2, 99999) #public values, modulo
+    return base, modulo
 
-print("\nHis answer raised to my X mod P")
-myKey = (hisAns ** myX) % ourP
-print("My key: decimal " + str(myKey))
+def calc_dh(first, second, third):
+    return int((first ** second) % third)
 
-print("\nMy answer raised to his X mod P")
-hisKey = (myAns ** hisX) % ourP
-print("His key: decimal " + str(hisKey))
+def encrypt_DH(self, message):
+    print("hej")
 
-exit(0)
+def decrypt_DH(self, message):
+    print("hej")
 
-#After this, implement AES encryption algorithm from PyCrypto for ensuring safe transfer of data
+#print("Shared Y: " + str(base))
+#print("Shared P: " + str(modulo))
+#print("My X: " + str(clientX) + " (Private)")
+#print("His X: " + str(serverX) + " (Private)")
+#
+##Part 2: solving the equation
+#print("\nY to the X mod P || (Y ** X) % P")
+#
+#myAns = (base ** clientX) % modulo
+#print("My answer: " + str(myAns))
+#
+#hisAns = (base ** serverX) % modulo
+#print("His answer: " + str(hisAns))
+#
+#print("\nHis answer raised to my X mod P")
+#myKey = (hisAns ** clientX) % modulo
+#print("My key: decimal " + str(myKey))
+#
+#print("\nMy answer raised to his X mod P")
+#hisKey = (myAns ** serverX) % modulo
+#print("His key: decimal " + str(hisKey))
+#
+##After this, implement AES encryption algorithm from PyCrypto for ensuring safe transfer of data
