@@ -1,6 +1,7 @@
 import socket
 import DiffieHellman
 import pickle
+import encryptor
 
 serverAddressPort   = ("127.0.0.1", 20001)
 bufferSize          = 1024
@@ -27,13 +28,15 @@ def key_exchange():
     print(dh_value)
     return dh_value
 
+# Send to server using created UDP socket
+def connection_phase(dh_value):
+    while True:
+        msgFromClient = input("What do you want to send? (Maximum 16 characters) ", )
+        UDPClientSocket.sendto(encryptor.aes_encrypt(encryptor.intkey_to_aeskey(dh_value), encryptor.intkey_to_aesiv(dh_value), msgFromClient), serverAddressPort)
+        msgFromServer = UDPClientSocket.recvfrom(bufferSize)
+        message = encryptor.aes_decrypt(encryptor.intkey_to_aeskey(dh_value), encryptor.intkey_to_aesiv(dh_value), msgFromServer[0])
+        print(message)
+
 key = key_exchange()
 print(key)
-
-# Send to server using created UDP socket
-while True:
-    msgFromClient = input("What do you want to send? ", )
-
-    UDPClientSocket.sendto(str.encode(msgFromClient), serverAddressPort)
-    msgFromServer = UDPClientSocket.recvfrom(bufferSize)
-    print(format(msgFromServer[0]))
+connection_phase(key)
