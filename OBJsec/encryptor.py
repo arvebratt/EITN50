@@ -22,4 +22,5 @@ def int_to_16_byte_hashstring(key):
 def new_iv():
     return ''.join([chr(random.randint(0, 0xFF)) for i in range(16)])
 
-def aes_encrypt()
+def aes_encrypt():
+    print("inget")
