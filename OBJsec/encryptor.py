@@ -1,28 +1,25 @@
-#How to encrypt strings in python
-from cryptography.fernet import Fernet
+from Crypto.Cipher import AES
+import hashlib
+import random
 
-key = Fernet.generate_key() #creates a random key everytime being called upon
+obj = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
+message = "The answer is no"
+ciphertext = obj.encrypt(message)
 
-#Save the key so you can encrypt/decrypt with the same key
-file = open('key.key', 'wb')
-file.write(key)  #the key is type bytes, bytes object, therefore 'b'
-file.close()
-print("\nOur key is: " + str(key))
 
-#Encode the message
-message = "my deep dark secret"
-encoded = message.encode()
-print("\nMessage to encrypt is: " + str(message))
+obj2 = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
+obj2.decrypt(ciphertext)
 
-#Encrypt the message
-f = Fernet(key)
-encrypted = f.encrypt(encoded)
-print("\nMessage is now encrypted into: " + str(encrypted))
+def int_to_bytes(x: int) -> bytes:
+    return x.to_bytes((x.bit_length() + 7) // 8, 'big')
 
-#decrypt
-f2 = Fernet(key)
-decrypted = decrypted = f2.decrypt(encrypted)
+def int_to_16_byte_hashstring(key):
+    key = int_to_bytes(key)
+    hash_object = hashlib.md5(key)
+    key = hash_object.hexdigest()
+    return key[0:16]
 
-#Decode the message
-original_message = decrypted.decode()
-print ("\nThis is the message decoded: " + str(original_message))
+def new_iv():
+    return ''.join([chr(random.randint(0, 0xFF)) for i in range(16)])
+
+def aes_encrypt()
